@@ -14,5 +14,5 @@ jobs:
       - run: make cover
       - run: make build
       - store_artifacts:
-        path: /go/src/github.com/bitnami/bcrypt-cli/out/bcrypt
-        destination: bcrypt
+          path: /go/src/github.com/bitnami/bcrypt-cli/out/bcrypt
+          destination: bcrypt
