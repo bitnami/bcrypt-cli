@@ -6,6 +6,9 @@ BUILD_DIR := $(abspath ./out)
 TOOL_NAME ?= $(shell basename $(CURDIR))
 TOOL_PATH := $(BUILD_DIR)/$(TOOL_NAME)
 
+BUILD_DATE := $(shell date -u '+%Y-%m-%d %I:%M:%S UTC' 2> /dev/null)
+GIT_HASH := $(shell git rev-parse HEAD 2> /dev/null)
+
 DEBUG ?= 0
 
 ifeq ($(DEBUG),1)

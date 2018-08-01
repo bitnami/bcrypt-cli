@@ -16,7 +16,7 @@ all:
 	@$(MAKE) build
 
 build:
-	@go build -ldflags="-s -w" -o $(TOOL_PATH)
+	@go build -ldflags="-X 'main.buildDate=$(BUILD_DATE)' -X main.commit=$(GIT_HASH) -s -w" -o $(TOOL_PATH)
 	@echo "*** Binary created under $(TOOL_PATH) ***"
 
 clean:
