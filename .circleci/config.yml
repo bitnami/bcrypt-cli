@@ -15,4 +15,4 @@ jobs:
       - run: make build
       - store_artifacts:
           path: /go/src/github.com/bitnami/bcrypt-cli/out/bcrypt
-          destination: bcrypt
+          destination: bcrypt-{{.OS}}_{{.Arch}}
