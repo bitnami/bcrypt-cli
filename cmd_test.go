@@ -4,10 +4,9 @@ import (
 	"bytes"
 	"testing"
 
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var tests = []struct {
