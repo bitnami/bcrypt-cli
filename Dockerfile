@@ -2,7 +2,7 @@
 #
 # echo -n mysecret | docker run --rm -i bitnami/bcrypt
 #
-FROM golang:1.10-stretch as build
+FROM golang:1.11-stretch as build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git make upx \
