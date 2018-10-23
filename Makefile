@@ -28,7 +28,7 @@ dep-ensure:
 get-build-deps:
 	@echo "+ Downloading build dependencies"
 	@go get golang.org/x/tools/cmd/goimports
-	@go get github.com/golang/lint/golint
+	@go get golang.org/x/lint/golint
 	@go get -u github.com/golang/dep/cmd/dep
 
 vet:
