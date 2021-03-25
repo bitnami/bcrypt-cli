@@ -1,0 +1,75 @@
+name: CI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches:
+      - master
+
+  release:
+    types: [published]
+
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0 * * *'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-and-test:
+    runs-on: ubuntu-20.04
+    name: Build and Test
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.15.10' # The Go version to download (if necessary) and use.
+      - name: Install Build Dependencies
+        run: make get-build-deps
+      - name: Download required modules
+        run: make download
+      - name: Vet
+        run: make vet
+      - name: Lint
+        run: make lint
+      - name: Cover
+        run: make cover
+      - name: Build
+        run: |
+          set -ex
+          for dist in amd64 arm64; do
+             target=out/bcrypt-linux-$dist
+             rm -rf "$target"
+             make build/$dist TOOL_PATH="$target"
+             file $target
+             zip -j "$target.zip" "$target"
+          done
+      - uses: actions/upload-artifact@v2
+        with:
+          name: built-binaries
+          path: |
+            out/bcrypt-linux-arm64.zip
+            out/bcrypt-linux-amd64.zip
+  release:
+    needs: [ 'build-and-test' ]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          path: ./artifacts
+      - run: ls ./artifacts/
+      - run: find ./artifacts/
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./artifacts/built-binaries/*zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
