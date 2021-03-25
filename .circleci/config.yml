@@ -8,12 +8,12 @@ jobs:
     steps:
       - checkout
       - run: make get-build-deps
-      - run: make dep-ensure
+      - run: make download
       - run: make vet
       - run: make lint
       - run: make cover
-      - run: make build
-      - run: make build/arm64
+      - run: make build TOOL_PATH=out/bcrypt
+      - run: make build/arm64 TOOL_PATH=out/arm64/bcrypt
       - store_artifacts:
           path: /go/src/github.com/bitnami/bcrypt-cli/out/bcrypt
           destination: bcrypt
