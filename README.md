@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/bitnami/bcrypt-cli.svg?style=svg)](https://circleci.com/gh/bitnami/bcrypt-cli)
+[![CI](https://github.com/bitnami/bcrypt-cli/actions/workflows/main.yml/badge.svg)](https://github.com/bitnami/bcrypt-cli/actions/workflows/main.yml)
 
 # bcrypt
 
